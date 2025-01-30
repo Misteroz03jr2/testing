@@ -39,10 +39,13 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        .result p {
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
-    <h1>Epsilon Pi JBoard Case Information Lookup System</h1>
+    <h1>Case Information Lookup</h1>
     <form id="caseForm">
         <label for="caseId">Case ID:</label>
         <input type="text" id="caseId" name="caseId" required>
@@ -57,10 +60,20 @@
             fetch('https://script.google.com/macros/s/AKfycbyhAhjPllEtnk1LTS_TJ-GOiCZVvtWh7ay2ddJkz9gOdkYrYxPVYZHdzfQa0WtIUoGU/exec/exec?caseId=' + caseId)
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                    const resultDiv = document.getElementById('result');
+                    if (data.status === 'error') {
+                        resultDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
+                    } else {
+                        resultDiv.innerHTML = `
+                            <p><strong>CASE ID:</strong> ${data.caseId}</p>
+                            <p><strong>STATUS:</strong> ${data.status}</p>
+                            <p><strong>DETAILS:</strong> ${data.details}</p>
+                        `;
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                    document.getElementById('result').innerHTML = `<p style="color: red;">An error occurred. Please try again.</p>`;
                 });
         });
     </script>
