@@ -42,13 +42,20 @@
         .result p {
             margin: 5px 0;
         }
+        .note {
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>Epsilon Pi Judicial Board Case Information Lookup System</h1>
+    <h1>Case Information Lookup</h1>
     <form id="caseForm">
         <label for="caseId">Case ID:</label>
         <input type="text" id="caseId" name="caseId" required>
+        <div class="note">CASE ID is case-sensitive.</div>
         <input type="submit" value="Submit">
     </form>
     <div id="result" class="result"></div>
@@ -66,7 +73,9 @@
                     } else {
                         resultDiv.innerHTML = `
                             <p><strong>CASE ID:</strong> ${data.caseId}</p>
+                            <p><strong>RESPONDENT NAME:</strong> ${data.respondentName}</p>
                             <p><strong>STATUS:</strong> ${data.status}</p>
+                            <p><strong>JUDGEMENT GIVEN:</strong> ${data.judgement}</p>
                             <p><strong>DETAILS:</strong> ${data.details}</p>
                         `;
                     }
